@@ -76,6 +76,11 @@ export const getWorkoutsByUser = async (userId) => {
   return response.data;
 };
 
+// Add the missing getUserWorkouts function (alias for getWorkoutsByUser)
+export const getUserWorkouts = async (userId) => {
+  return getWorkoutsByUser(userId);
+};
+
 export const getWorkoutById = async (workoutId) => {
   const response = await api.get(`/workouts/${workoutId}`);
   return response.data;
