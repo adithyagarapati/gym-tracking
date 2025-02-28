@@ -2,22 +2,22 @@ const express = require('express');
 const router = express.Router();
 const workoutController = require('../controllers/workoutController');
 
-// GET all workouts for a user
-router.get('/user/:userId', workoutController.getUserWorkouts);
+// Get all workouts for a user
+router.get('/user/:userId', workoutController.getWorkoutsByUser);
 
-// GET workout by ID
+// Get a workout by ID
 router.get('/:id', workoutController.getWorkoutById);
 
-// CREATE new workout
+// Create a new workout
 router.post('/', workoutController.createWorkout);
 
-// UPDATE workout
+// Update a workout
 router.put('/:id', workoutController.updateWorkout);
 
-// DELETE workout
+// Delete a workout
 router.delete('/:id', workoutController.deleteWorkout);
 
-// GET max weights for exercises by user
-router.get('/user/:userId/max-weights', workoutController.getMaxWeights);
+// Get max weights for exercises by user
+router.get('/max-weights/:userId', workoutController.getMaxWeightsByUser);
 
 module.exports = router;
