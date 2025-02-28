@@ -35,16 +35,13 @@ services:
       - gym-tracker-network
 
   client:
-    build: ./client
+    build:
+      context: ./client
+      target: production
     container_name: gym-tracker-client
     restart: always
     ports:
       - "3000:80"
-    volumes:
-      - ./client:/app
-      - /app/node_modules
-    environment:
-      - REACT_APP_API_URL=http://localhost:5000/api
     depends_on:
       - server
     networks:
