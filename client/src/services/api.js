@@ -112,6 +112,11 @@ export const getMeasurementsByUser = async (userId) => {
   return response.data;
 };
 
+// Add the missing getUserMeasurements function (alias for getMeasurementsByUser)
+export const getUserMeasurements = async (userId) => {
+  return getMeasurementsByUser(userId);
+};
+
 export const getMeasurementById = async (measurementId) => {
   const response = await api.get(`/measurements/${measurementId}`);
   return response.data;
