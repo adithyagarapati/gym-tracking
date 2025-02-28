@@ -76,7 +76,6 @@ export const getWorkoutsByUser = async (userId) => {
   return response.data;
 };
 
-// Add the missing getUserWorkouts function (alias for getWorkoutsByUser)
 export const getUserWorkouts = async (userId) => {
   return getWorkoutsByUser(userId);
 };
@@ -112,7 +111,6 @@ export const getMeasurementsByUser = async (userId) => {
   return response.data;
 };
 
-// Add the missing getUserMeasurements function (alias for getMeasurementsByUser)
 export const getUserMeasurements = async (userId) => {
   return getMeasurementsByUser(userId);
 };
@@ -129,6 +127,12 @@ export const createMeasurement = async (measurementData) => {
 
 export const updateMeasurement = async (measurementId, measurementData) => {
   const response = await api.put(`/measurements/${measurementId}`, measurementData);
+  return response.data;
+};
+
+// Add the missing deleteMeasurement function
+export const deleteMeasurement = async (measurementId) => {
+  const response = await api.delete(`/measurements/${measurementId}`);
   return response.data;
 };
 
