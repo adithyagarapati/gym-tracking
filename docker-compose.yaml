@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: gym-tracker-mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+    networks:
+      - gym-tracker-network
+
+  server:
+    build: ./server
+    container_name: gym-tracker-server
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+      - ./server/uploads:/app/uploads
+    environment:
+      - NODE_ENV=development
+      - PORT=5000
+      - MONGODB_URI=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongodb:27017/gym-tracker?authSource=admin
+    depends_on:
+      - mongodb
+    networks:
+      - gym-tracker-network
+
+  client:
+    build: ./client
+    container_name: gym-tracker-client
+    restart: always
+    ports:
+      - "3000:80"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000/api
+    depends_on:
+      - server
+    networks:
+      - gym-tracker-network
+
+networks:
+  gym-tracker-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
